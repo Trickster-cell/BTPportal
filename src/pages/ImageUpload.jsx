@@ -6,6 +6,7 @@ const ImageUpload = () => {
 
   const [prediction, setPrediction] = useState("");
   const [base64Img, setBase64Img] = useState("");
+  const [engPrediction, setEngPrediction] = useState("");
   const [upImg, setUpImg] = useState("");
 
   const uploadImage = async () => {
@@ -24,6 +25,7 @@ const ImageUpload = () => {
         // console.log(data);
         setBase64Img(data.transformed_image);
         setPrediction(data.predicted_label);
+        setEngPrediction(data.eng_predicted_label);
         // Handle the data or update the state as needed
       } else {
         throw new Error("Upload failed");
@@ -79,9 +81,11 @@ const ImageUpload = () => {
           {/* Content based on the current mode */}
           {mode === "Digit" && <p>Digit mode content</p>}
           {mode === "Letter" && base64Img && (
-            <div style={{ textAlign: "center" }}>
+            <div style={{ textAlign: "center", marginLeft: "2vh" }}>
               {/* Display predicted value */}
-              <p style={{ fontSize: "20px" }}>{prediction}</p>
+              <p style={{ fontSize: "20px" }}>
+                {prediction}({engPrediction})
+              </p>
 
               {/* Display the images */}
               <div style={{ display: "flex", justifyContent: "center" }}>
@@ -99,17 +103,17 @@ const ImageUpload = () => {
                   )}
                 </div>
                 {base64Img && (
-                <div style={{ margin: "10px" }}>
-                  {/* Display the transformed image */}
-                  <div>
-                    <img
-                      src={`data:image/png;base64,${base64Img}`}
-                      alt="Transformed Image"
-                      style={{ width: "200px", height: "200px" }}
-                    />
-                    <p>Transformed Image</p>
+                  <div style={{ margin: "10px" }}>
+                    {/* Display the transformed image */}
+                    <div>
+                      <img
+                        src={`data:image/png;base64,${base64Img}`}
+                        alt="Transformed Image"
+                        style={{ width: "200px", height: "200px" }}
+                      />
+                      <p>Transformed Image</p>
+                    </div>
                   </div>
-                </div>
                 )}
               </div>
             </div>
